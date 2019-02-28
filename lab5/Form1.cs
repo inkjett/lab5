@@ -17,7 +17,9 @@ namespace lab5
         //переменные 
         string text_from_file = "";
         Int32[,] arr_main;
+        Int32[,] arr_with_canges;
         Int32 count_of_word;
+        Int32 max_value=0;
 
 
         public Form1()
@@ -92,7 +94,7 @@ namespace lab5
             }
         }
 
-        public void metthod_arr_to_grid (int [,] arr_in,ref DataGridView out_DataGrid)
+        public void method_arr_to_grid (int [,] arr_in,ref DataGridView out_DataGrid) // метод вывода массива в грид
         {
             out_DataGrid.RowCount = arr_in.GetLength(0);
             out_DataGrid.ColumnCount = arr_in.GetLength(0);
@@ -104,11 +106,70 @@ namespace lab5
                 }
 
             }
-
-
-
         }
         
+
+        public void method_max_value (int [,]arr_in, ref int max_value)// метод для определения максимального значения по модулю
+        {
+            Int32 temp_max_value=0;
+            for (int i = 0; i < arr_in.GetLength(0); i++)
+                for (int j = 0; j < arr_in.GetLength(1); j++)
+                {
+                    if (Math.Abs(temp_max_value)==arr_in[i,j])
+                    {
+                        temp_max_value = arr_in[i, j];
+                    }
+                }
+            max_value = temp_max_value;
+        }
+            
+        public void method_change_max(int [,]arr_in, int max_value,ref int [,] arr_out)//Метод для замены четных значений максимальным значением по модулю
+        {
+            arr_out = new int[arr_in.GetLength(0), arr_in.GetLength(1)];
+                for (int i = 0; i < arr_in.GetLength(0); i++)
+                for (int j = 0; j < arr_in.GetLength(1); j++)
+                {
+                   if (arr_in[i,j]%2==0)
+                    {
+                        arr_in[i, j] = max_value;
+                    }
+                    arr_out[i, j] = arr_in[i,j];
+                }
+            
+        }
+
+        public void arr_change_line(int[,] arr_in, ref int[,] arr_out) // метод выведения местросполжения несимитричных элементов отностиельно вертикальной оси.
+        {
+            // добавление столбца GetLength(1) - столбцы, GetLength(0) - стороки 
+            // i - столбец  j - строка
+            //Int32 count_for_colum = 0;
+            Int32 temp_arr_number;
+            //Int32[] temp_arr;  
+            Int32 Middel_line = 0;
+            arr_out = new int[arr_in.GetLength(0), arr_in.GetLength(1)];
+            if (arr_in.GetLength(0) % 2 != 0)//опрделение строки четные или нет
+            {
+                Middel_line = (arr_in.GetLength(0) / 2);         //определение средней строки       
+                for (int i = 0; i < arr_in.GetLength(0); i++)
+                {
+                    temp_arr_number = arr_in[0, i];
+                    arr_in[0, i] = arr_in[Middel_line, i];
+                    arr_in[Middel_line, i] = temp_arr_number;
+                }
+
+            }
+            for (int i = 0; i < arr_in.GetLength(0); i++)
+            {
+                for (int j = 0; j < arr_in.GetLength(1); j++)
+                {
+                  
+
+                }
+            }
+
+        }
+
+
 
 
         //форма
@@ -140,7 +201,15 @@ namespace lab5
         {
             arr_main = new Int32[Int32.Parse(textBox3.Text),Int32.Parse(textBox4.Text)];
             method_gen_arr(textBox3,textBox4,textBox5,textBox6,ref arr_main);
-            metthod_arr_to_grid(arr_main,ref dataGridView1);
+            method_arr_to_grid(arr_main,ref dataGridView1);
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            arr_with_canges = new Int32[arr_main.GetLength(0), arr_main.GetLength(1)];
+            method_max_value(arr_main,ref max_value);
+            method_change_max(arr_main,max_value, ref arr_with_canges);
+            method_arr_to_grid(arr_with_canges,ref dataGridView1);
         }
     }
 }
