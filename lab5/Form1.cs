@@ -22,7 +22,8 @@ namespace lab5
 
         Int32 count_of_word;
         Int32 max_value=0;
-        Int32 count_of_list;
+        //Int32 count_of_list;
+
 
 
 
@@ -114,42 +115,36 @@ namespace lab5
 
         public void method_arr_list_to_grid(List<List<int>> arr_in, ref DataGridView out_DataGrid) // метод вывода list массива в грид
         {
-            Int32 row = arr_in.Count;
-           /* foreach (var a in arr_in)
+            out_DataGrid.RowCount = arr_in.Count;
+            out_DataGrid.ColumnCount = 5;
+
+            for (int i = 0; i < arr_in.Count; i++)
             {
-                Int32 i = 0;
-                Int32 j = 0;
-                for (int i = 0; i < arr_in.Count; i++)
+                for (int j = 0; j < 5; j++)
                 {
-                    for (int j = 0; j < arr_in.Count; j++)
-                    {
-                        out_DataGrid.Rows.Add(arr_in[i],arr_in[j]);
-                    }
+                    out_DataGrid.Rows[i].Cells[j].Value = String.Format("{0}", arr_in[i][j]);
                 }
-            }*/
 
-
+            }
         }
-
-
-
+        
         public Int32 method_max_value (int [,]arr_in)// метод для определения максимального значения по модулю
         {
             Int32 temp_max_value=0;
             for (int i = 0; i < arr_in.GetLength(0); i++)
                 for (int j = 0; j < arr_in.GetLength(1); j++)
                 {
-                    if (Math.Abs(temp_max_value)==arr_in[i,j])
+                    if (Math.Abs(temp_max_value)<arr_in[i,j])
                     {
                         temp_max_value = arr_in[i, j];
                     }
                 }
-            return max_value; //= temp_max_value;
+            return temp_max_value; //= temp_max_value;
         }
             
-        public Int32[,] method_change_max(int [,]arr_in, int max_value)//Метод для замены четных значений максимальным значением по модулю
+        public void method_change_max(int [,]arr_in, int max_value, out int [,]arr_out) //Метод для замены четных значений максимальным значением по модулю
         {
-                //arr_out = new int[arr_in.GetLength(0), arr_in.GetLength(1)];
+            arr_out = new int[arr_main.GetLength(0), arr_main.GetLength(1)];
                 for (int i = 0; i < arr_in.GetLength(0); i++)
                 for (int j = 0; j < arr_in.GetLength(1); j++)
                 {
@@ -157,20 +152,23 @@ namespace lab5
                     {
                         arr_in[i, j] = max_value;
                     }
+                    arr_out[i, j] = arr_in[i, j];
                   }
-            return arr_in;
         }
 
-        public void arr_change_line(int[,] arr_in, ref List<List<int>> arr_out ) // метод выведения местросполжения несимитричных элементов отностиельно вертикальной оси.
+        public void arr_change_line(int [,]arr_in, ref List<List<int>> arr_out ) // метод выведения местросполжения несимитричных элементов отностиельно вертикальной оси.
         {
             // добавление столбца GetLength(1) - столбцы, GetLength(0) - стороки 
             // i - столбец  j - строка
             //Int32 count_for_colum = 0;
             Int32 temp_arr_number;
             Int32 Middel_line = 0;
+            Int32 value_of_ends = 1;
+
+            Int32 value_for_pass = 0;
+            Int32 value_for_pass_2 = 0;
             arr_out = new List<List<int>>();
             List<int> row = new List<int>();
-            //List<List<int>> colum = new List<List<int>>();
             if (arr_in.GetLength(0) % 2 != 0)//опрделение строки четные или нет
             {
                 Middel_line = (arr_in.GetLength(0) / 2);         //определение средней строки       
@@ -180,37 +178,43 @@ namespace lab5
                     arr_in[0, i] = arr_in[Middel_line, i];
                     arr_in[Middel_line, i] = temp_arr_number;
                 }
-
             }
             for (int j = 0; j < arr_in.GetLength(1); j++)
             {
+                Int32 count_for_else = 0;
                 if (j < Middel_line)
                 {
-                    Int32 left_count_j = 0;
-                    Int32 right_count_j = arr_in.GetLength(0) - 1;
-                    row = new List<int>();
+                    Int32 count_for_lines = 0;
                     for (int i = 0; i < arr_in.GetLength(1); i++)
                     {
-
-                        if (arr_in[i, j + left_count_j] != arr_in[i, j + right_count_j])
-                        {
+                        Int32 right_count_j = arr_in.GetLength(0) - value_of_ends;
+                        if (arr_in[i, j] != arr_in[i, j + right_count_j])
+                        {                            
+                            row = new List<int>();
                             arr_out.Add(row);// добавляет новый ряд в массив                        
                             for (int ii = 0; ii <= 4; ii++)
-                            { arr_out[0].Add(0); }// добавляем столбецы                        
-                            arr_out[i][0] = i; // записываем в таблицу координаты элементов
-                            arr_out[i][1] = j;
-                            arr_out[i][3] = i;
-                            arr_out[i][4] = j + right_count_j;
-                            left_count_j++;
-                            right_count_j--;
-                            count_of_list++;
+                            { arr_out[j + count_for_lines+ value_for_pass_2].Add(0); }// добавляем столбецы                        
+                            arr_out[i - count_for_else+ value_for_pass][0] = i; // записываем в таблицу координаты элементов
+                            arr_out[i - count_for_else+ value_for_pass][1] = j;
+                            arr_out[i - count_for_else+ value_for_pass][3] = i;
+                            arr_out[i - count_for_else+ value_for_pass][4] = j + right_count_j;
+                            //left_count_j++;//счетчик левой стороны
+                            right_count_j--;// счетчик правой стороны массива нужен для сравнения элементов
+                            //count_of_list++;//добовляем счетчик для размера массива
+                            count_for_lines++; //расчет линий массива
                         }
-
+                        else
+                        {
+                            count_for_else++;
+                        }
                     }
                 }
-
+                value_of_ends++;
+                value_for_pass += 5;
+                value_for_pass_2 += 4;
+                value_for_pass -= count_for_else;
+                value_for_pass_2 -= count_for_else;
             }
-
         }
 
 
@@ -243,19 +247,28 @@ namespace lab5
 
         private void button4_Click(object sender, EventArgs e)
         {
+            arr_main = null;
             arr_main = new Int32[Int32.Parse(textBox3.Text),Int32.Parse(textBox4.Text)];
             method_gen_arr(textBox3,textBox4,textBox5,textBox6,ref arr_main);
             method_arr_to_grid(arr_main,ref dataGridView1);
         }
 
         private void button5_Click(object sender, EventArgs e)
-        {            
+        {
+            //count_of_list = 0;
+            arr_with_canges = null;
             max_value = method_max_value(arr_main);
-            arr_with_canges = method_change_max(arr_main,max_value);
-            arr_change_line(arr_main,ref arr_with_canges_elements);
-            //method_arr_to_grid(arr_with_canges_elements, ref dataGridView1);
-            Int32 row = arr_with_canges_elements.Count;
+            arr_with_canges = new int[arr_main.GetLength(0), arr_main.GetLength(1)];
+            method_change_max(arr_main,max_value,out arr_with_canges);
+            method_arr_to_grid(arr_with_canges, ref dataGridView1);
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            arr_with_canges_elements = null;
+            arr_change_line(arr_main, ref arr_with_canges_elements);
+            method_arr_list_to_grid(arr_with_canges_elements, ref dataGridView1);
         }
     }
 }
