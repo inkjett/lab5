@@ -133,7 +133,7 @@ namespace lab5
                 }
             return temp_max_value;
         }
-        public void method_change_max(int[,] arr_in, int max_value, out int[,] arr_out) //Метод для замены четных значений максимальным значением по модулю
+        public void method_change_max(int[,] arr_in, int max_value, out int[,] arr_out) //метод для замены четных значений максимальным значением по модулю
         {
             arr_out = new int[arr_main.GetLength(0), arr_main.GetLength(1)];
             for (int i = 0; i < arr_in.GetLength(0); i++)
@@ -223,10 +223,6 @@ namespace lab5
                 }
             }
         }
-
-
-
-
         //форма
         private void button1_Click(object sender, EventArgs e)// вывод текста в текстбокс
         {
@@ -261,23 +257,45 @@ namespace lab5
         private void button5_Click(object sender, EventArgs e)
         {
             arr_with_canges = null;
-            max_value = method_max_value(arr_main);
-            arr_with_canges = new int[arr_main.GetLength(0), arr_main.GetLength(1)];
-            method_change_max(arr_main,max_value,out arr_with_canges);
-            method_arr_to_grid(arr_with_canges, ref dataGridView2);
-
+            if (arr_main != null)
+            {
+                max_value = method_max_value(arr_main);
+                arr_with_canges = new int[arr_main.GetLength(0), arr_main.GetLength(1)];
+                method_change_max(arr_main, max_value, out arr_with_canges);
+                method_arr_to_grid(arr_with_canges, ref dataGridView2);
+            }
+            else
+            {
+                MessageBox.Show("Массив не создан, создайте массив", "Собщение", MessageBoxButtons.OK);
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
         {
-            arr_with_canges_elements = null;
-            arr_change_line(arr_main, ref arr_with_canges_elements);
-            method_arr_list_to_grid(arr_with_canges_elements, ref dataGridView2);
+
+            if (arr_main != null)
+            {
+                arr_with_canges_elements = null;
+                arr_change_line(arr_main, ref arr_with_canges_elements);
+                method_arr_list_to_grid(arr_with_canges_elements, ref dataGridView2);
+            }
+            else
+            {
+                MessageBox.Show("Массив не создан, создайте массив", "Собщение", MessageBoxButtons.OK);
+            }
         }
 
         private void button7_Click(object sender, EventArgs e)
         {
-            arr_to_file(arr_with_canges_elements);
+            if (arr_with_canges_elements != null)
+            {
+                arr_to_file(arr_with_canges_elements);
+            }
+            else
+            {
+                MessageBox.Show("Массив не создан, создайте массив", "Собщение", MessageBoxButtons.OK);
+            }
+
         }
     }
 }
