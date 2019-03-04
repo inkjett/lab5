@@ -53,7 +53,11 @@
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
+            this.label10 = new System.Windows.Forms.Label();
+            this.dataGridView2 = new System.Windows.Forms.DataGridView();
+            this.button7 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
             // button1
@@ -120,9 +124,9 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(190, 107);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
+            this.label4.Size = new System.Drawing.Size(23, 13);
             this.label4.TabIndex = 6;
-            this.label4.Text = "label4";
+            this.label4.Text = "****";
             // 
             // button2
             // 
@@ -242,11 +246,11 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(501, 392);
+            this.button6.Location = new System.Drawing.Point(501, 379);
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(247, 23);
             this.button6.TabIndex = 20;
-            this.button6.Text = "Заменить четные числа 0ми";
+            this.button6.Text = "Вывести";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
@@ -259,11 +263,41 @@
             this.label9.TabIndex = 21;
             this.label9.Text = "Заменить четные числа максимальными по модулю";
             // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Location = new System.Drawing.Point(484, 363);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(182, 13);
+            this.label10.TabIndex = 22;
+            this.label10.Text = "Вывести положение разных чисел";
+            // 
+            // dataGridView2
+            // 
+            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView2.Location = new System.Drawing.Point(12, 199);
+            this.dataGridView2.Name = "dataGridView2";
+            this.dataGridView2.Size = new System.Drawing.Size(441, 232);
+            this.dataGridView2.TabIndex = 23;
+            // 
+            // button7
+            // 
+            this.button7.Location = new System.Drawing.Point(15, 471);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(247, 23);
+            this.button7.TabIndex = 24;
+            this.button7.Text = "Записать в файл";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(799, 504);
+            this.ClientSize = new System.Drawing.Size(802, 539);
+            this.Controls.Add(this.button7);
+            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
@@ -290,6 +324,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -321,6 +356,9 @@
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.Label label10;
+        private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button button7;
     }
 }
 
